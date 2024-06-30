@@ -17,6 +17,8 @@ const io = new Server(server, {
 
 // 5 ) Socket Io Connection
 io.on('connection', (socket) => {
-  console.log(`User Logger ${Math.floor(Math.random() * 23 * 12)}`);
-  socket.emit('welcome', 'accpet message');
+  socket.emit('messageFromServer', { data: 'welcome to the socketIo server' });
+  socket.on('messageToServer', (dataFromClient) => {
+    console.log(dataFromClient.data);
+  });
 });
