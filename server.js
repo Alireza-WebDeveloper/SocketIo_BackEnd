@@ -13,10 +13,12 @@ const io = new Server(server, {
   cors: {
     origin: '*',
   },
+  path: '/socket.io',
+  serveClient: true,
 });
 
 // 5 ) Socket Io Connection
-io.on('connection', (socket) => {
+io.of('/admin').on('connection', (socket) => {
   socket.emit('messageFromServer', { data: 'welcome to the socketIo server' });
   socket.on('messageToServer', (dataFromClient) => {
     console.log(dataFromClient.data);
