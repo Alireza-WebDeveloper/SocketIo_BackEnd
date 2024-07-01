@@ -15,12 +15,14 @@ const io = new Server(server, {
   },
   path: '/socket.io',
   serveClient: true,
+  pingInterval: 10000,
+  pingTimeout: 5000,
 });
 
-// 5 ) Socket Io Connection
-io.of('/admin').on('connection', (socket) => {
-  socket.emit('messageFromServer', { data: 'welcome to the socketIo server' });
-  socket.on('messageToServer', (dataFromClient) => {
-    console.log(dataFromClient.data);
+io.on('connect', (socket) => {
+  socket.on('newMessageToServer', ({ text }) => {
+    socket.emit('newMessageFromServer', {
+      text: 'the message accept from backend',
+    });
   });
 });
