@@ -22,21 +22,22 @@ const io = new Server(server, {
 
 // 1) Send To All Clients
 io.of('/').on('connection', (socket) => {
+  // !! 1 )  Receives Message From Client
   socket.on('newMessageToServer', ({ text, username, id, roomJoinId }) => {
-    socket.join(roomJoinId);
-    io.of('/')
-      .to(roomJoinId)
-      .emit(
-        'joined',
-        `${socket.id} says i have joined the room ${roomJoinId} `
-      );
-    io.emit('newMessageFromServer', {
+    // !! 2 )  Send Message To All Clients
+    io.of('/').emit('newMessageFromServer', {
       serverMessage: 'the message accept from backend',
       clientMessage: text,
       username,
       id,
     });
   });
+});
+
+const nameSpaces = ['/wiki', '/admin', '/rocket'];
+
+io.on('connection', (socket) => {
+  socket.emit('ns', nameSpaces);
 });
 
 // 2 ) Send To Admin Client
