@@ -1,4 +1,4 @@
-# Academy One
+# Academy
 
 **[Demo لینک سایت](https://academy-one-mu.vercel.app/)**
 
